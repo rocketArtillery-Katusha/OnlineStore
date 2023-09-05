@@ -8,7 +8,8 @@ const ProductSchema = new mongoose.Schema({
     description: { type: String, required: true },
     color: { type: String },
     images: [{ type: String, required: true }],
-    reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Review' }]
+    reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Review' }],
+    complaint: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Complaint' }]
 }, { timestamps: true });
 
 export default mongoose.model('Product', ProductSchema);
