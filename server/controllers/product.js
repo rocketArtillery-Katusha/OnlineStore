@@ -17,7 +17,7 @@ export const getAllProducts = async (req, res) => {
 
     } catch (error) {
         res.status(500).json({
-            message: error
+            message: "Ошибка с сервером"
         });
     }
 };
@@ -44,7 +44,7 @@ export const getProductById = async (req, res) => {
 
     } catch (error) {
         res.status(500).json({
-            message: error
+            message: "Ошибка с сервером"
         });
     }
 };
@@ -72,7 +72,7 @@ export const actionsShoppingCart = async (req, res) => {
 
     } catch (error) {
         res.status(500).json({
-            message: error
+            message: "Ошибка с сервером"
         });
     }
 };
@@ -101,7 +101,7 @@ export const getProductsShoppingCart = async (req, res) => {
 
     } catch (error) {
         res.status(500).json({
-            message: error
+            message: "Ошибка с сервером"
         });
     }
 };
@@ -120,7 +120,7 @@ export const sendReview = async (req, res) => {
         res.status(201).json(newRreview);
     } catch (error) {
         res.status(500).json({
-            message: error
+            message: "Ошибка с сервером"
         });
     }
 };
@@ -128,10 +128,11 @@ export const sendReview = async (req, res) => {
 export const sendComplaint = async (req, res) => {
     try {
         const user = await User.findById(req.userId);
+        const product = await Product.findById(req.body.productId)
 
         const newComplaint = new Complaint({
             user,
-            product: req.body.productId,
+            product,
             complaint: req.body.complaint
         });
 
@@ -139,7 +140,7 @@ export const sendComplaint = async (req, res) => {
 
     } catch (error) {
         res.status(500).json({
-            message: error
+            message: "Ошибка с сервером"
         });
     }
 };

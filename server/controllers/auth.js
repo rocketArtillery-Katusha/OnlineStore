@@ -27,7 +27,7 @@ export const registerUser = async (req, res) => {
 
     } catch (error) {
         res.status(500).json({
-            message: error
+            message: "Ошибка с сервером"
         });
     }
 };
@@ -46,7 +46,7 @@ export const loginUser = async (req, res) => {
 
     } catch (error) {
         res.status(500).json({
-            message: error
+            message: "Ошибка с сервером"
         });
     }
 };
@@ -58,7 +58,7 @@ export const getMe = async (req, res) => {
         res.status(200).json({ user });
     } catch (error) {
         res.status(500).json({
-            message: error
+            message: "Ошибка с сервером"
         });
     }
 };

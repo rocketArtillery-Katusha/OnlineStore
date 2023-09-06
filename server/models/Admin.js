@@ -1,8 +1,7 @@
 import mongoose from "mongoose";
 
 const AdminSchema = new mongoose.Schema({
-    name: { type: String, required: true },
-    password: { type: String, required: true },
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     complaints: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Complaint' }],
 }, { timestamps: true });
 
