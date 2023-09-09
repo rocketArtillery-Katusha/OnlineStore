@@ -34,8 +34,8 @@ export const registerUser = async (req, res) => {
 
 export const loginUser = async (req, res) => {
     try {
-        const { email, password } = req.body;
-        const user = await User.findByOne({ email });
+        const { email } = req.body;
+        const user = await User.findOne({ email });
 
         const token = jwt.sign(
             { id: user._id },

@@ -8,7 +8,7 @@ export const addNewAdmin = async (req, res) => {
         const user = await User.findById(req.body.userId);
 
         if (!user) {
-            res.status(200).json({
+            return res.status(200).json({
                 message: 'Данный пользователь не обнгаружен'
             });
         }
@@ -20,14 +20,14 @@ export const addNewAdmin = async (req, res) => {
 
         newAdmin.save();
 
-        res.stauts(200).json({
+        res.status(200).json({
             message: 'Добавлен новый админ',
             updatedUser
         });
 
     } catch (error) {
         res.status(500).json({
-            message: "Ошибка с сервером"
+            message: error
         });
     }
 };
@@ -40,7 +40,7 @@ export const getAllComplaints = async (req, res) => {
         );
 
         if (!complaints) {
-            res.status(200).json({
+            return res.status(200).json({
                 message: 'Жалоб не обнаружено'
             });
         }
@@ -59,7 +59,7 @@ export const getComplaintById = async (req, res) => {
         const complaint = await Complaint.findById(req.body.complaintId);
 
         if (!complaint) {
-            res.status(404).json({
+            return res.status(404).json({
                 message: 'Такой жалобы не существует'
             });
         }
@@ -78,39 +78,25 @@ export const freezeProduct = async (req, res) => {
         const product = await Product.findById(req.body.productId);
 
         if (!product) {
-            res.status(404).json({
+            return res.status(404).json({
                 message: 'Такого товара не существует'
             });
         }
+        if (product.status !== 'frozen') {
+            const updatedProduct = await Product.findByIdAndUpdate(req.body.productId, {
+                $set: { status: 'frozen' }
+            }, { new: true });
 
-        const updatedProduct = await Product.findByIdAndUpdate(req.body.productId, {
-            $set: { status: 'frozen' }
-        });
+            return res.status(200).json(updatedProduct);
 
-        res.status(200).json(updatedProduct);
+        } else {
+            const updatedProduct = await Product.findByIdAndUpdate(req.body.productId, {
+                $set: { status: 'sale' }
+            }, { new: true });
 
-    } catch (error) {
-        res.status(500).json({
-            message: "Ошибка с сервером"
-        });
-    }
-};
+            return res.status(200).json(updatedProduct);
 
-export const unfreezeProduct = async (req, res) => {
-    try {
-        const product = await Product.findById(req.body.productId);
-
-        if (!product) {
-            res.status(404).json({
-                message: 'Такого товара не существует'
-            });
         }
-
-        const updatedProduct = await Product.findByIdAndUpdate(req.body.productId, {
-            $set: { status: 'sale' }
-        });
-
-        res.status(200).json(updatedProduct);
 
     } catch (error) {
         res.status(500).json({
@@ -123,7 +109,7 @@ export const deleteProduct = async (req, res) => {
     try {
         const deleteProduct = await Product.findByIdAndDelete(req.body.productId, (err) => {
             if (err) {
-                res.json(500).json({
+                return res.json(500).json({
                     message: err
                 });
             }

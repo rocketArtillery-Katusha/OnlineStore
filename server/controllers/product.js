@@ -1,14 +1,38 @@
 import User from '../models/User.js';
 import Product from '../models/Product.js';
-import Complaint from '../models/Complait.js';
+import Complaint from '../models/Complaint.js';
 import Review from '../models/Review.js';
+
+export const addProduct = async (req, res) => {
+    try {
+        const { productName, price, amoоunt, description, color, images } = req.body;
+
+        const addNewProduct = new Product({
+            productName,
+            price,
+            amoоunt,
+            description,
+            color,
+            images
+        })
+
+        addNewProduct.save();
+
+        res.status(201).json(addNewProduct);
+
+    } catch (error) {
+        res.status(500).json({
+            message: "Ошибка с сервером"
+        });
+    }
+};
 
 export const getAllProducts = async (req, res) => {
     try {
         const products = await Product.find();
 
-        if (!products) {
-            res.status(200).json({
+        if (!products.length) {
+            return res.status(200).json({
                 message: "Нет товаров"
             });
         }
@@ -27,7 +51,7 @@ export const getProductById = async (req, res) => {
         const findProduct = await Product.findById(req.body.productId);
 
         if (!findProduct) {
-            res.status(405).json({
+            return res.status(405).json({
                 message: "Не возможно получить товар"
             });
         }
@@ -59,14 +83,14 @@ export const actionsShoppingCart = async (req, res) => {
                 $push: { shoppingCart: findProduct._id }
             }, { new: true });
 
-            res.status(200).json(updatedUser);
+            return res.status(200).json(updatedUser);
 
         } else {
             const updatedUser = await User.findByIdAndUpdate(req.userId, {
                 $pull: { shoppingCart: findProduct._id }
             }, { new: true });
 
-            res.status(200).json(updatedUser);
+            return res.status(200).json(updatedUser);
 
         }
 
@@ -82,7 +106,7 @@ export const getProductsShoppingCart = async (req, res) => {
         const user = await User.findById(req.userId);
 
         if (!user) {
-            res.status(403).json({
+            return res.status(403).json({
                 message: 'Авторизуйтесь для добавления товара в корзину'
             });
         }
@@ -92,7 +116,7 @@ export const getProductsShoppingCart = async (req, res) => {
         );
 
         if (!products) {
-            res.status(200).json({
+            return res.status(200).json({
                 message: 'В корзине пока ничего нет :)'
             });
         }
