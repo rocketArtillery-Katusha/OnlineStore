@@ -1,12 +1,13 @@
 import { body, validationResult } from "express-validator";
-import User from "../models/User.js";
+import { Request, Response, NextFunction } from "express";
+import User from "../models/User";
 import bcrypt from 'bcrypt';
 
 export const registerValidation = [
-    body('username').isLength({ min: 3, max: 16 }).withMessage('Длина имени от 2 до 25 символов'),
+    body('username').isLength({ min: 2, max: 16 }).withMessage('Длина имени от 2 до 25 символов'),
 
-    function (req, res, next) {
-        const error = validationResult(req);
+    function (req: Request, res: Response, next: NextFunction) {
+        const error: any = validationResult(req);
 
         if (!error.isEmpty()) {
             return res.status(401).json({
@@ -21,8 +22,8 @@ export const registerValidation = [
         .isLength({ min: 8, max: 64 }).withMessage('Длина почты от 8 до 64 символов')
         .isEmail().withMessage('Почта введина некорректно'),
 
-    async function (req, res, next) {
-        const error = validationResult(req);
+    async function (req: Request, res: Response, next: NextFunction) {
+        const error: any = validationResult(req);
         const email = req.body.email;
         const user = await User.findOne({ email });
 
@@ -45,8 +46,8 @@ export const registerValidation = [
         .custom((password) => !/\s/.test(password)).withMessage('Пароль должен быть без пробелов')
         .isLength({ min: 6, max: 16 }).withMessage('Длина пороля от 6 до 16 символов'),
 
-    function (req, res, next) {
-        const error = validationResult(req);
+    function (req: Request, res: Response, next: NextFunction) {
+        const error: any = validationResult(req);
 
         if (!error.isEmpty()) {
             return res.status(400).json({
@@ -64,8 +65,8 @@ export const loginValidation = [
         .isLength({ min: 8, max: 64 }).withMessage('Проверьте корректность введенных данных')
         .isEmail().withMessage('Проверьте корректность введенных данных'),
 
-    async function (req, res, next) {
-        const error = validationResult(req);
+    async function (req: Request, res: Response, next: NextFunction) {
+        const error: any = validationResult(req);
         const { email } = req.body;
         const user = await User.findOne({ email });
 
@@ -87,12 +88,12 @@ export const loginValidation = [
         .custom((password) => !/\s/.test(password)).withMessage('Неверный пароль')
         .isLength({ min: 6, max: 16 }).withMessage('Неверный пароль'),
 
-    async function (req, res, next) {
-        const error = validationResult(req);
+    async function (req: Request, res: Response, next: NextFunction) {
+        const error: any = validationResult(req);
         const { email, password } = req.body;
-        const user = await User.findOne({ email });
+        const user: any = await User.findOne({ email });
 
-        const isPasswordCorrect = await bcrypt.compare(password, user.password);
+        const isPasswordCorrect = bcrypt.compare(password, user.password);
 
         if (!error.isEmpty()) {
             return res.status(400).json({
@@ -104,7 +105,7 @@ export const loginValidation = [
                 message: 'Неверный пароль'
             });
         }
-
+        req.body.user = user;
         next();
     }
 ];
