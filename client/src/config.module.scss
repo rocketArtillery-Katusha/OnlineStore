@@ -1,0 +1,57 @@
+$--bg-color: #edeef0;
+$--bg-color-second: #ffffff;
+$--title-text-color: gray;
+$--primary-text-size: 18px;
+$--subtitle-text-size: 22px;
+$--secondary-text-size: 16px;
+$--title-text-size: 30px;
+
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    border: 0;
+}
+
+body {
+    font: $--primary-text-size 'Roboto', sans-serif;
+    line-height: normal;
+    min-height: 100%;
+    width: 100%;
+    font-weight: 300;
+    background-color: $--bg-color;
+}
+
+img {
+    width: 100%;
+    height: 100%;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+input,
+textarea {
+    width: 100%;
+    outline: none;
+    box-sizing: border-box;
+    font-size: $--primary-text-size;
+    resize: none;
+}
+
+h1,
+h1,
+h3,
+h4,
+h5 {
+    font-weight: 500;
+    font-size: $--primary-text-size;
+}
+
+ol,
+ul {
+    list-style: none;
+}
