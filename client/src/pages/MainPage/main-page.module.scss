@@ -1,0 +1,13 @@
+@import '../../config.module.scss';
+
+.searchResult {
+    font-size: $--title-text-size;
+    margin-bottom: 20px;
+    color: $--title-text-color;
+}
+
+.containerCards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(290px, max-content));
+    justify-content: center;
+}
