@@ -1,0 +1,47 @@
+@import '../../config.module.scss';
+
+.containerCard {
+    position: relative;
+    top: 0;
+    left: 0;
+    max-width: 300px;
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 0 10px;
+}
+
+.productImg {
+    max-height: 300px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.containerIfnfoProduct {
+    display: flex;
+    flex-direction: column;
+}
+
+.productPrice {
+    font-size: $--subtitle-text-size;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.productName {
+    font-size: $--secondary-text-size;
+    margin-bottom: 10px;
+}
+
+.productBtnCart {
+    max-width: fit-content;
+    font-size: $--primary-text-size;
+    border: 2px solid black;
+    cursor: pointer;
+    padding: 5px;
+    transition: 0.3s;
+
+    &:hover {
+        background-color: rgba($color: #000000, $alpha: 0.3);
+    }
+}
