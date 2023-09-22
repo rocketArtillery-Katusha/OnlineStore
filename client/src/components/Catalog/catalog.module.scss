@@ -1,0 +1,35 @@
+@import '../../config.module.scss';
+
+.containerCatalog {
+    position: fixed;
+    z-index: 100;
+    top: 83px;
+    background-color: $--bg-color-second;
+    width: 300px;
+    height: 100%;
+    padding-top: 20px;
+    border-top: 2px solid gray;
+    overflow-y: scroll;
+    scrollbar-color: red;
+}
+
+.section {
+    display: flex;
+    padding: 20px 10px;
+    cursor: pointer;
+    justify-content: space-between;
+    transition: 0.3s;
+
+    &>div {
+        display: flex;
+        align-items: center;
+
+        &>svg {
+            margin-right: 10px;
+        }
+    }
+
+    &:hover {
+        background-color: rgba($color: #000000, $alpha: 0.3);
+    }
+}
