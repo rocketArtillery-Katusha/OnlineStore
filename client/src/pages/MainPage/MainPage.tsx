@@ -1,4 +1,4 @@
-import ProductCard from '../../components/ProductCrad/ProductCard';
+import ProductCard from '../../components/ProductCard/ProductCard';
 import classes from './main-page.module.scss';
 
 const MainPage = () => {
